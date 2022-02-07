@@ -1,27 +1,18 @@
-require('dotenv').config();
+require("dotenv/config");
 
 module.exports = {
-    type: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    synchronize: false,
-    logging: false,
-    entities: [
-        './src/core/infra/data/database/entities/**/*'
-    ], 
-    migrations: [
-        './src/core/infra/data/database/migrations/**/*'
-    ],
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    entities: [process.env.ENTITIES_DIR],
+    migrations: [process.env.MIGRATIONS_DIR],
     cli: {
-        entitiesDir: './src/core/infra/data/database/entities',
-        migrationsDir: './src/core/infra/data/database/migrations'
+        entitiesDir: "src/core/infra/database/entities",
+        migrationsDir: "src/core/infra/database/migrations",
     },
+    synchronize: false,
     extra: {
         ssl: {
-            rejectUnauthorized: false
-        }
-    }
-}
+            rejectUnauthorized: false,
+        },
+    },
+};
