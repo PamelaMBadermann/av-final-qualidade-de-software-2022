@@ -1,4 +1,4 @@
-export * from './data/connections/database';
-export * from './data/database/entities';
+export * from './database/connections/database';
+export * from './database/entities';
 export * from './repositories';
 //export * from './adapters';

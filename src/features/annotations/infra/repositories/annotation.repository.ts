@@ -1,68 +1,49 @@
-import { AnnotationEntity } from '../../../../core/infra';
-import { Annotation } from '../../domain/models';
+import {
+    ILike,
+    IsNull,
+    LessThan,
+    MoreThanOrEqual,
+    Not,
+    Repository,
+} from "typeorm";
+import { DatabaseConnection } from "../../../../core/infra/database/connections/connection";
+import { Annotation } from "../../../../core/infra/database/entities/Annotations";
+import { IAnnotation } from "../../domain/model/annotation";
 
 export class AnnotationRepository {
-    async create(params: Annotation): Promise<Annotation> {
-        const { title, description, userUID } = params;
+    private readonly repository: Repository<Annotation>;
 
-        const annotation = await AnnotationEntity.create({
-            title, 
-            description
-        }).save();
-
-        return Object.assign({}, params, annotation);
+    constructor() {
+        this.repository =
+            DatabaseConnection.getConnection().getRepository(Annotation);
     }
 
-    async getAll(): Promise<Annotation[]> {
-        const annotations = await AnnotationEntity.find();
-
-        return annotations.map(annotation => ({
-            uid: annotation.uid,
-            title: annotation.title,
-            description: annotation.description,
-            userUID: annotation.userUID
-        }));
+    async findAll() {
+        return await this.repository.find();
     }
 
-    async getOne(uid: string): Promise<Annotation | null> {
-        const annotation = await AnnotationEntity.findOne(uid);
-
-        if (!annotation) {
-            return null
-        }
-
-        return {
-            uid: annotation.uid,
-            title: annotation.title,
-            description: annotation.description,
-            userUID: annotation.userUID
-        };
+    async find(uid: string) {
+        return await this.repository.findOne(uid);
     }
 
-    public async update(uid: string, params: Annotation): Promise<Annotation | null> {
-        const annotation = await AnnotationEntity.findOne(uid);
+    async create(annotation: IAnnotation) {
+        const annotationEntity = this.repository.create(annotation);
+        await this.repository.save(annotationEntity);
 
-            if (!annotation) {
-                return null;
-            }
-
-            annotation.title = params.title;
-            annotation.description = params.description;
-            annotation.save();
-
-            return {
-                uid: annotation.uid,
-                title: annotation.title,
-                description: annotation.description,
-                userUID: annotation.userUID,
-            };
+        return annotationEntity;
     }
 
-    async delete(uid: string): Promise<void> {
-        const annotation = await AnnotationEntity.findOne(uid);
-
-        if (annotation) {
-            annotation.remove();
-        }
+    async findSecretAnnotations() {
+        return await this.repository.find({
+            where: {
+                startDate: Not(IsNull()),
+                endDate: LessThan(new Date()),
+                description: ILike("secret"),
+                user: {
+                    idade: MoreThanOrEqual(18),
+                },
+            },
+            relations: ["user"],
+        });
     }
 }

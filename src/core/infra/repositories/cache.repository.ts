@@ -1,38 +1,52 @@
-import IORedis from 'ioredis';
-import { Redis } from '../data/connections/redis';
+import { Redis } from "ioredis";
+import { RedisConnection } from "../database/connections/redis";
 
 export class CacheRepository {
-    private redis!: IORedis.Redis;
+    private readonly redis: Redis;
 
     constructor() {
-        this.setConnection();
+        this.redis = RedisConnection.getConnection();
     }
 
-    private async setConnection() {
-        this.redis = await Redis.getConnection();
+    async set(key: string, value: any) {
+        const result = await this.redis.set(
+            key,
+            JSON.stringify(value),
+            "EX",
+            30
+        );
+
+        if (result === null) {
+            throw new Error("Set error");
+        }
     }
 
-    public async set(key: string, value: any): Promise<string | null> {
-        
-        return await this.redis.set(key, JSON.stringify(value));
+    async hset(globalKey: string, key: string, value: any) {
+        const result = await this.redis.hset(
+            globalKey,
+            key,
+            JSON.stringify(value),
+            key,
+            JSON.stringify(value),
+            key,
+            JSON.stringify(value)
+        );
+
+        if (result === null) {
+            throw new Error("Set error");
+        }
     }
 
-    public async setex(key: string, value: any, ttl: number): Promise<string | null> {
-        
-        return await this.redis.set(key, JSON.stringify(value), 'EX', ttl);
+    async sadd(key: string, set: string) {
+        await this.redis.sadd(key, set);
     }
 
-    public async get(key: string): Promise<any | null> {
-        
-        const value = await this.redis.get(key);
-
-        return value ? JSON.parse(value) : null;
+    async get(key: string) {
+        const result = await this.redis.get(key);
+        return result != null ? JSON.parse(result) : undefined;
     }
 
-    public async del(key: string): Promise<boolean> {
-        
-        const result = await this.redis.del(key);
-
-        return result !== 0;
+    async delete(key: string) {
+        await this.redis.del(key);
     }
 }

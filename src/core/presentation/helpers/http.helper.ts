@@ -1,22 +1,42 @@
-import { HttpResponse } from '../models';
-import { DataNotFoundError, ServerError } from './../errors';
+import { Response } from "express";
+import { DuplicatedProfileError } from "../../../features/authentication/domain/errors/duplicated-profile-error";
+import { DomainError } from "../../domain/errors/domain-error";
+import { ControllerError } from "../errors/controller-error";
 
-export const ok = (body: any): HttpResponse => ({
-    statusCode: 200,
-    body
-});
+export const ok = (res: Response, data?: any) => {
+    return res.status(200).send({
+        ok: true,
+        data,
+    });
+};
 
-export const badRequest = (error: Error): HttpResponse => ({
-    statusCode: 400,
-    body: error
-});
+export const serverError = (res: Response, error?: any) => {
+    if (error instanceof DomainError || error instanceof ControllerError) {
+        return res.status(error.code).send({
+            ok: false,
+            error: error.message,
+            identifier: error.name,
+        });
+    }
 
-export const notFound = (): HttpResponse => ({
-    statusCode: 404,
-    body: new DataNotFoundError()
-});
+    if (error instanceof Error) {
+        return res.status(500).send({
+            ok: false,
+            error: error.message,
+            identifier: error.name,
+        });
+    }
 
-export const serverError = (): HttpResponse => ({
-    statusCode: 500,
-    body: new ServerError()
-});
+    return res.status(500).send({
+        ok: false,
+        error,
+        identifier: "unkwnown",
+    });
+};
+
+export const badRequest = (res: Response, reason?: string) => {
+    return res.status(400).send({
+        ok: false,
+        reason,
+    });
+};

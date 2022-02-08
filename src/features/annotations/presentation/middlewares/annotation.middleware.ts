@@ -1,25 +1,25 @@
-import { badRequest, ok } from "../../../../core/presentation";
-import { HttpRequest, HttpResponse } from "../../../../core/presentation";
-import { RequireFieldsValidator } from "../../../../core/presentation";
-import { Annotation } from "../../domain/models";
+// import { badRequest, ok } from "../../../../core/presentation";
+// import { HttpRequest, HttpResponse } from "../../../../core/presentation";
+// import { RequireFieldsValidator } from "../../../../core/presentation";
+// import { Annotation } from "../../domain/model";
 
-export class AnnotationMiddleware {
-    private fields = ['title', 'userUID'];
+// export class AnnotationMiddleware {
+//     private fields = ['title', 'userUID'];
 
-    async handle(request: HttpRequest): Promise<HttpResponse> {
-        const body: Annotation = request.body;
+//     async handle(request: HttpRequest): Promise<HttpResponse> {
+//         const body: Annotation = request.body;
 
-        for (const field of this.fields) {
-            const error = new RequireFieldsValidator(field).validate(body);
+//         for (const field of this.fields) {
+//             const error = new RequireFieldsValidator(field).validate(body);
 
-            if (error) {
-                return badRequest(error);
-            }
-        }
+//             if (error) {
+//                 return badRequest(error);
+//             }
+//         }
 
-        return ok({});
-    }
-}
+//         return ok({});
+//     }
+// }
 
 // export default async function AnottationUidNonExistent(request: Request, response: Response, next: NextFunction) {
 //     const { uid } = request.params;
