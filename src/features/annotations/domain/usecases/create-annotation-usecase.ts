@@ -3,12 +3,14 @@ import { UseCase } from "../../../../core/domain/contracts/usecase";
 import { NotFoundError } from "../../../../core/domain/errors/not-found-error";
 import { CacheRepository } from "../../../../core/infra/repositories/cache.repository";
 import { IUser } from "../../../user/domain/model/user";
+import { IAnnotation } from "../../../annotations/domain/model/annotation.model";
 import { UserRepository } from "../../../user/infra/repositories/user-repository";
 import { AnnotationRepository } from "../../infra/repositories/annotation.repository";
 
 export interface CreateAnnotationParams {
     username: string;
-    name: string;
+    uid: string;
+    title: string;
     description: string;
     startDate?: Date;
     endDate?: Date;

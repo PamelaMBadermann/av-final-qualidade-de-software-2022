@@ -11,18 +11,19 @@ export class CreateAnnotationController implements Controller {
 
     async execute(req: Request, res: Response) {
         try {
-            const { username, name, description, startDate, endDate } =
+            const { username, title, description, startDate, endDate } =
                 req.body;
 
             // ....
 
             await this.createAnnotationUseCase.run({
-                username,
-                name,
-                description,
-                startDate,
-                endDate,
-            });
+            username,
+            title,
+            description,
+            startDate,
+            endDate,
+            uid: "",
+        });
 
             return ok(res, "Annotation was successfully created");
         } catch (error) {
