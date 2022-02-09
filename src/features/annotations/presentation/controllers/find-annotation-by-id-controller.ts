@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Controller } from "../../../../core/presentation/contracts/controller";
+import { Controller } from "../../../../core/presentation/contracts/controller.contract";
 import {
     badRequest,
     ok,

@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
-import { CacheRepository } from "../../../../core/infra/repositories/cache-repository";
+import { CacheRepository } from "../../../../core/infra/repositories/cache.repository";
 import { UserRepository } from "../../../user/infra/repositories/user-repository";
 import { CreateAnnotationUseCase } from "../../domain/usecases/create-annotation-usecase";
 import { FindAnnotationByIdUseCase } from "../../domain/usecases/find-annotation-by-id/find-annotation-by-id-usecase";
 import { ListAnnotationsUseCase } from "../../domain/usecases/list-annotations-usecase";
-import { AnnotationRepository } from "../../infra/repositories/annotation-repository";
+import { AnnotationRepository } from "../../infra/repositories/annotation.repository";
 import { CreateAnnotationController } from "../controllers/create-annotation-controller";
 import { FindAnnotationByIdController } from "../controllers/find-annotation-by-id-controller";
 import { ListAnnotationsController } from "../controllers/list-annotations-controller";

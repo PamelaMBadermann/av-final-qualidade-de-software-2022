@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connections/connection";
-import { User } from "../../../../core/infra/database/entities/User";
+import { DatabaseConnection } from "../../../../core/infra/database/connections/database";
+import { User } from "../../../../core/infra/database/entities/user.entity";
 import { IUser } from "../../domain/model/user";
-import { IUserRepository } from "../../../annotations/domain/usecases/create-project-usecase";
+import { IUserRepository } from "../../../annotations/domain/usecases/create-annotation-usecase";
 
 export class UserRepository implements IUserRepository {
     private repository: Repository<User>;

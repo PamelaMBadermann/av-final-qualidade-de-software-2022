@@ -1,6 +1,6 @@
-import { DatabaseConnection } from "./core/infra/database/connections/connection";
+import { DatabaseConnection } from "./core/infra/database/connections/database";
 import "reflect-metadata";
-import { initServer } from "./core/presentation/server";
+import { initServer } from "./core/presentation/app";
 require("dotenv/config");
 import { RedisConnection } from "./core/infra/database/connections/redis";
 

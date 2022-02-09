@@ -6,9 +6,9 @@ import {
     Not,
     Repository,
 } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connections/connection";
-import { Annotation } from "../../../../core/infra/database/entities/Annotations";
-import { IAnnotation } from "../../domain/model/annotation";
+import { DatabaseConnection } from "../../../../core/infra/database/connections/database";
+import { Annotation } from "../../../../core/infra/database/entities/annotation.entity";
+import { IAnnotation } from "../../domain/model/annotation.model";
 
 export class AnnotationRepository {
     private readonly repository: Repository<Annotation>;

@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connections/connection";
-import { Profile } from "../../../../core/infra/database/entities/Profile";
+import { DatabaseConnection } from "../../../../core/infra/database/connections/database";
+import { Profile } from "../../../../core/infra/database/entities/profile.entity";
 import { IProfile } from "../../domain/model/profile";
 
 export class ProfileRepository {

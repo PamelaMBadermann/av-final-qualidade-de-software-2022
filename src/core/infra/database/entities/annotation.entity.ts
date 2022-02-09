@@ -6,16 +6,15 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryColumn,
-    PrimaryGeneratedColumn,
 } from "typeorm";
-import { IProject } from "../../../../features/annotations/domain/model/project";
-import { User } from "./User";
+import { IAnnotation } from "../../../../features/annotations/domain/model/annotation.model";
+import { User } from "./user.entity";
 import { v4 as createUuid } from "uuid";
-import { IAnnotation } from "../../../../features/annotations/domain/model/IAnnotation";
-import { Annotation } from "./Annotation";
+import { IImpediment } from "../../../../features/impediments/domain/models/IImpediment.model";
+import { Impediment } from "./impediment.entity";
 
 @Entity()
-export class Project implements IProject {
+export class Annotation implements IAnnotation {
     @PrimaryColumn({
         type: "uuid",
     })
@@ -24,7 +23,7 @@ export class Project implements IProject {
     @Column({
         length: 30,
     })
-    name: string;
+    title: string;
 
     @Column({
         length: 30,
@@ -50,8 +49,8 @@ export class Project implements IProject {
     @CreateDateColumn()
     created_at: Date;
 
-    // @OneToMany(() => Impediment, (impediment) => impediment.project)
-    // impediments: IImpediment[];
+    @OneToMany(() => Impediment, (impediment) => impediment.annotation)
+    impediments: IImpediment[];
 
     constructor() {
         this.uid = createUuid();

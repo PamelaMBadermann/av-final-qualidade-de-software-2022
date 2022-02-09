@@ -24,15 +24,13 @@ export class SignUpUseCase implements UseCase {
             throw new Error("A senha é maior do que 50 caracteres");
         }
 
-        // Regras
         // 1- Nao pode perfil duplicado - ok
-        // 2- O user já deve estar criado - ok
-
         const profile = await this.repository.find(data.username);
         if (!!profile) {
             throw new DuplicatedProfileError();
         }
 
+        // 2- O user já deve estar criado - ok
         const user = await this.userRepository.find(data.username);
         if (!user) {
             throw new NotFoundError("User");

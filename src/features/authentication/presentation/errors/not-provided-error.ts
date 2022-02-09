@@ -1,4 +1,4 @@
-import { ControllerError } from "../../../../core/presentation/errors/controller-error";
+import { ControllerError } from "../../../../core/presentation/errors/controller.error";
 
 export class NotProvidedError extends ControllerError {
     constructor(field: string) {

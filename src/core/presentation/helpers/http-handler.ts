@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { DuplicatedProfileError } from "../../../features/authentication/domain/errors/duplicated-profile-error";
 import { DomainError } from "../../domain/errors/domain-error";
-import { ControllerError } from "../errors/controller-error";
+import { ControllerError } from "../errors/controller.error";
 
 export const ok = (res: Response, data?: any) => {
     return res.status(200).send({

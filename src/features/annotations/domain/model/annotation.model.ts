@@ -1,6 +1,6 @@
 import { IUser } from "../../../user/domain/model/user";
 
-export interface Annotation {
+export interface IAnnotation {
     uid: string;
     title: string;
     description: string;
