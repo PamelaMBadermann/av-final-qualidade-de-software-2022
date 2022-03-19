@@ -1,7 +1,7 @@
 import { IUser } from "../../../user/domain/model/user";
 
 export interface IAnnotation {
-    uid: string;
+    uid?: string;
     title: string;
     description: string;
     startDate?: Date;

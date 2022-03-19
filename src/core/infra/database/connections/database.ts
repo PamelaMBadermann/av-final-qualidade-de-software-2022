@@ -1,4 +1,4 @@
-import { Connection, createConnection, getConnection } from 'typeorm';
+import { Connection, createConnection, getConnection } from "typeorm";
 
 export class DatabaseConnection {
     private static _connection: Connection;
@@ -6,7 +6,7 @@ export class DatabaseConnection {
     static getConnection() {
         let conn = getConnection();
 
-        if(!conn) {
+        if (!conn) {
             throw new Error("Database is not connected.");
         }
 
@@ -14,8 +14,14 @@ export class DatabaseConnection {
     }
 
     static async initConnection() {
-        if(!DatabaseConnection._connection) {
+        if (!DatabaseConnection._connection) {
             this._connection = await createConnection();
         }
-    } 
+    }
+
+    static async closeConnection() {
+        if (this._connection) {
+            await this._connection.close();
+        }
+    }
 }

@@ -17,4 +17,10 @@ export class RedisConnection {
 
         return this._connection;
     }
+
+    static async closeConnection() {
+        if (this._connection) {
+            await this._connection.quit();
+        }
+    }
 }

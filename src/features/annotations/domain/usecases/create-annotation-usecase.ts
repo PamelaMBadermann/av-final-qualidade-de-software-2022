@@ -9,7 +9,6 @@ import { AnnotationRepository } from "../../infra/repositories/annotation.reposi
 
 export interface CreateAnnotationParams {
     username: string;
-    uid: string;
     title: string;
     description: string;
     startDate?: Date;
